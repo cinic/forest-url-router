@@ -1,11 +1,11 @@
 {
   "name": "rollup-typescript-boilerpalte",
   "version": "1.0.0",
-  "description": "Rollup Typescript Starter Kit",
+  "description": "Small router for Forest JS",
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",
   "browser": "dist/index.umd.js",
-  "repository": "https://github.com/cinic/forest-router",
+  "repository": "https://github.com/cinic/rollup-typescript-boilerpalte",
   "author": "Alexander Andreev <cinic.rus@gmail.com>",
   "license": "MIT",
   "private": false,
