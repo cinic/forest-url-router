@@ -1,0 +1,13 @@
+{
+  "extends": "./tsconfig.json",
+  "include": [
+    "./babel.config.js",
+    "./.eslintrc.js",
+    "./__mocks__/**/*",
+    "./jest.config.js",
+    "./rollup.config.js"
+  ],
+  "compilerOptions": {
+    "allowJs": true
+  }
+}
