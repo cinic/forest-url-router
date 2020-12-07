@@ -1,7 +1,7 @@
 {
   "name": "rollup-typescript-boilerpalte",
   "version": "1.0.0",
-  "description": "Small router for Forest JS",
+  "description": "Rollup Typescript Starter Kit",
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",
   "browser": "dist/index.umd.js",
