@@ -1,2 +1,2 @@
-# rollup-typescript-boilerpalte
-Rollup Typescript Starter Kit
+# forest-router
+Small router for Forest JS
