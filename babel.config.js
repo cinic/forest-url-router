@@ -21,23 +21,16 @@ module.exports = function (api) {
     ],
   ]
   const plugins = [
-    // [
-    //   '@babel/plugin-transform-runtime',
-    //   {
-    //     regenerator: true,
-    //   },
-    // ],
     '@babel/plugin-proposal-object-rest-spread',
     '@babel/plugin-proposal-optional-chaining',
     '@babel/plugin-proposal-export-namespace-from',
     '@babel/plugin-proposal-nullish-coalescing-operator',
-    // [
-    //   'effector/babel-plugin',
-    //   {
-    //     exportMetadata: true,
-    //     addLoc: true,
-    //   },
-    // ],
+    [
+      'effector/babel-plugin',
+      {
+        addLoc: true,
+      },
+    ],
   ]
   const env = {
     test: {

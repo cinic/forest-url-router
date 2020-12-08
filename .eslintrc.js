@@ -39,9 +39,10 @@ module.exports = {
     'plugin:import/typescript',
   ],
   plugins: ['@typescript-eslint', 'import', 'jest'],
-  ignorePatterns: ['dist'],
+  ignorePatterns: ['dist', 'index.d.ts'],
   rules: {
     'import/no-cycle': 2,
+    '@typescript-eslint/explicit-module-boundary-types': 0,
   },
   globals: {
     it: true,

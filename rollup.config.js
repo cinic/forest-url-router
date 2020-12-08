@@ -3,13 +3,14 @@ import {terser} from 'rollup-plugin-terser'
 import {nodeResolve} from '@rollup/plugin-node-resolve'
 import pkg from './package.json'
 
+const extensions = ['.mjs', '.node', '.js', '.ts', '.tsx']
 const plugins = [
-  nodeResolve(),
   babel({
     babelHelpers: 'bundled',
-    extensions: ['.js', '.ts', '.tsx'],
+    extensions,
     include: ['src/**/*'],
   }),
+  nodeResolve({extensions}),
   terser(),
 ]
 
@@ -33,7 +34,7 @@ export default [
     input: 'src/index.ts',
     output: [
       {
-        name: 'starter-kit',
+        name: 'forest-router',
         file: pkg.browser,
         format: 'umd',
       },
