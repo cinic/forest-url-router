@@ -11,7 +11,7 @@
   "private": false,
   "scripts": {
     "build": "yarn clean && rollup --config && yarn copyts",
-    "copyts": "cp ./src/index.d.ts ./dist/index.d.ts",
+    "copyts": "cp ./index.d.ts ./dist/index.d.ts && cp ./index.d.ts ./dist/index.esm.d.ts && cp ./index.d.ts ./dist/index.cjs.d.ts && cp ./index.d.ts ./dist/index.umd.d.ts",
     "clean": "rm -rf ./dist"
   },
   "husky": {
