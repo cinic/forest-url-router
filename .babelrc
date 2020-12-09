@@ -1,0 +1,23 @@
+{
+  "presets": [
+    [
+      "@babel/preset-typescript",
+      {
+        "allExtensions": true
+      }
+    ]
+  ],
+  "plugins": [
+    [
+      "effector/babel-plugin",
+      {
+        "addLoc": true
+      }
+    ]
+  ],
+  "env": {
+    "test": {
+      "presets": ["@babel/preset-typescript"]
+    }
+  }
+}

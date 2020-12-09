@@ -6,7 +6,7 @@
     "./__mocks__/**/*",
     "./jest.config.js",
     "./rollup.config.js",
-    "./index.d.ts"
+    "./jest.config.ts"
   ],
   "compilerOptions": {
     "allowJs": true
