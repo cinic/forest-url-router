@@ -5,18 +5,6 @@ import commonjs from '@rollup/plugin-commonjs'
 import pkg from './package.json'
 
 const extensions = ['.mjs', '.node', '.js', '.ts', '.tsx']
-const plugins = [
-  babel({
-    babelrc: false,
-    babelHelpers: 'bundled',
-    extensions,
-    // include: ['src/**/*'],
-    exclude: /(node_modules.*)/,
-  }),
-  nodeResolve({extensions}),
-  commonjs(),
-  terser(),
-]
 
 export default [
   {
@@ -32,17 +20,16 @@ export default [
         format: 'es',
       },
     ],
-    plugins,
-  },
-  {
-    input: 'src/index.ts',
-    output: [
-      {
-        name: 'forest-router',
-        file: pkg.browser,
-        format: 'umd',
-      },
+    plugins: [
+      babel({
+        babelrc: false,
+        babelHelpers: 'bundled',
+        extensions,
+        exclude: /(node_modules.*)/,
+      }),
+      nodeResolve({extensions}),
+      commonjs(),
+      terser(),
     ],
-    plugins,
   },
 ]
