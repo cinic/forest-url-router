@@ -1,5 +1,5 @@
 import {pathToRegexp, Key, Path, TokensToRegexpOptions, ParseOptions} from 'path-to-regexp'
-import {Routes} from './types'
+import {Routes} from './index.d'
 
 const cache: PathCache = {}
 const routeCache: RouteCache = {}
@@ -21,7 +21,7 @@ export function matchRoute({pathname, routes}: MatchRouteParams) {
   return match
 }
 
-function matchPath({pathname, path, exact = false}: MatchPathParams) {
+function matchPath({pathname, path, exact = false}: MatchPathParams): MatchedParams {
   if (!path && path !== '') return null
   const {regexp, keys} = compilePath(path, {end: exact})
   const match = regexp.exec(pathname)
@@ -37,10 +37,10 @@ function matchPath({pathname, path, exact = false}: MatchPathParams) {
     path,
     url: path === '/' && url === '' ? '/' : url,
     isExact,
-    params: keys.reduce((memo, key, index) => {
-      memo[key.name] = values[index]
-      return memo
-    }, {} as MatchedParams),
+    params: keys.reduce(
+      (memo, key, index) => ({...memo, [key.name.toString()]: values[index]}),
+      {},
+    ),
   }
 }
 
@@ -60,6 +60,11 @@ type PathCache = {
 }
 type RouteCache = {[key: string]: ReturnType<typeof matchPath>}
 type Options = TokensToRegexpOptions & ParseOptions
-type MatchPathParams = {pathname: string; path: Path; exact?: boolean}
-type MatchedParams = {[key in Key['name']]: string}
+type MatchPathParams = {pathname: string; path: string; exact?: boolean}
+type MatchedParams = {
+  path: string
+  url: string
+  isExact: boolean
+  params: {[key: string]: string}
+} | null
 type MatchRouteParams = {routes: Routes; pathname: string}
