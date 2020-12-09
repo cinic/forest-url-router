@@ -2,29 +2,29 @@ module.exports = function (api) {
   api.cache(true)
 
   const presets = [
-    [
-      '@babel/preset-env',
-      {
-        debug: false,
-        modules: false,
-        useBuiltIns: 'entry',
-        corejs: 3,
-        shippedProposals: true,
-      },
-    ],
-    [
-      '@babel/preset-typescript',
-      {
-        isTSX: true,
-        allExtensions: true,
-      },
-    ],
+    // [
+    //   '@babel/preset-env',
+    //   {
+    //     debug: false,
+    //     modules: false,
+    //     useBuiltIns: 'entry',
+    //     corejs: 3,
+    //     shippedProposals: true,
+    //   },
+    // ],
+    // [
+    //   '@babel/preset-typescript',
+    //   {
+    //     isTSX: true,
+    //     allExtensions: true,
+    //   },
+    // ],
   ]
   const plugins = [
-    '@babel/plugin-proposal-object-rest-spread',
-    '@babel/plugin-proposal-optional-chaining',
-    '@babel/plugin-proposal-export-namespace-from',
-    '@babel/plugin-proposal-nullish-coalescing-operator',
+    // '@babel/plugin-proposal-object-rest-spread',
+    // '@babel/plugin-proposal-optional-chaining',
+    // '@babel/plugin-proposal-export-namespace-from',
+    // '@babel/plugin-proposal-nullish-coalescing-operator',
     [
       'effector/babel-plugin',
       {

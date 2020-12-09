@@ -1,16 +1,20 @@
 import {babel} from '@rollup/plugin-babel'
 import {terser} from 'rollup-plugin-terser'
 import {nodeResolve} from '@rollup/plugin-node-resolve'
+import commonjs from '@rollup/plugin-commonjs'
 import pkg from './package.json'
 
 const extensions = ['.mjs', '.node', '.js', '.ts', '.tsx']
 const plugins = [
   babel({
+    babelrc: false,
     babelHelpers: 'bundled',
     extensions,
-    include: ['src/**/*'],
+    // include: ['src/**/*'],
+    exclude: /(node_modules.*)/,
   }),
   nodeResolve({extensions}),
+  commonjs(),
   terser(),
 ]
 
@@ -25,7 +29,7 @@ export default [
       },
       {
         file: pkg.module,
-        format: 'esm',
+        format: 'es',
       },
     ],
     plugins,
