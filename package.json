@@ -1,6 +1,6 @@
 {
   "name": "forest-url-router",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Small url router for Forest JS",
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",
@@ -29,9 +29,9 @@
     "dist/index.cjs.js",
     "dist/index.esm.js",
     "dist/index.d.ts",
-    "match-route.d.ts",
-    "types.d.ts",
-    "url-router.d.ts",
+    "dist/match-route.d.ts",
+    "dist/types.d.ts",
+    "dist/url-router.d.ts",
     "README.md",
     "LICENSE"
   ],
