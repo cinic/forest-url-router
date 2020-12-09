@@ -9,10 +9,10 @@
   "license": "MIT",
   "private": false,
   "scripts": {
-    "build": "yarn clean && yarn types && yarn compile",
+    "build": "yarn clean && yarn compile && yarn copyts",
     "compile": "rollup --config",
     "types": "tsc --build tsconfig.build.json",
-    "copyts": "cp ./index.d.ts ./dist/index.d.ts && cp ./index.d.ts ./dist/index.esm.d.ts && cp ./index.d.ts ./dist/index.cjs.d.ts && cp ./index.d.ts ./dist/index.umd.d.ts",
+    "copyts": "cp ./src/index.d.ts ./dist/index.d.ts && cp ./src/index.d.ts ./dist/index.esm.d.ts && cp ./src/index.d.ts ./dist/index.cjs.d.ts",
     "clean": "rm -rf ./dist"
   },
   "husky": {
