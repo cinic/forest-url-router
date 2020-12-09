@@ -29,9 +29,8 @@
     "dist/index.cjs.js",
     "dist/index.esm.js",
     "dist/index.d.ts",
-    "dist/match-route.d.ts",
-    "dist/types.d.ts",
-    "dist/url-router.d.ts",
+    "dist/index.esm.d.ts",
+    "dist/index.cjs.d.ts",
     "README.md",
     "LICENSE"
   ],
