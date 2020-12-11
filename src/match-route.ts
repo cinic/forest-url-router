@@ -23,7 +23,7 @@ export function matchRoute({pathname, routes}: MatchRouteParams) {
 
 function matchPath({pathname, path, exact = false}: MatchPathParams): MatchedParams {
   if (!path && path !== '') return null
-  const {regexp, keys} = compilePath(path, {end: exact})
+  const {regexp, keys} = compilePath(path, {end: true})
   const match = regexp.exec(pathname)
 
   if (!match) return null
@@ -36,7 +36,6 @@ function matchPath({pathname, path, exact = false}: MatchPathParams): MatchedPar
   return {
     path,
     url: path === '/' && url === '' ? '/' : url,
-    isExact,
     params: keys.reduce(
       (memo, key, index) => ({...memo, [key.name.toString()]: values[index]}),
       {},
@@ -64,7 +63,6 @@ type MatchPathParams = {pathname: string; path: string; exact?: boolean}
 type MatchedParams = {
   path: string
   url: string
-  isExact: boolean
   params: {[key: string]: string}
 } | null
 type MatchRouteParams = {routes: Routes; pathname: string}
