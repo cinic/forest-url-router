@@ -4,6 +4,7 @@
   "description": "Small url router for Forest JS",
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",
+  "types": "./dist/index.d.ts",
   "repository": "https://github.com/cinic/forest-url-router",
   "author": "Alexander Andreev <cinic.rus@gmail.com>",
   "license": "MIT",
@@ -34,7 +35,6 @@
     "README.md",
     "LICENSE"
   ],
-  "types": "./dist/index.d.ts",
   "dependencies": {
     "path-to-regexp": "^6.2.0"
   },

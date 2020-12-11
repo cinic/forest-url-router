@@ -2,7 +2,7 @@ import {Event, Store} from 'effector'
 import {PropertyMap, DOMProperty, AttributeStoreInput, StylePropertyMap, HandlerMap} from 'forest'
 
 export type RouterParams = {
-  baseURL: string
+  baseURL?: string
   routes: Routes
 }
 export type Route = {
