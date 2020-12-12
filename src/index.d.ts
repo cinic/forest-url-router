@@ -1,15 +1,21 @@
-import {Event, Store} from 'effector'
+import {Effect, Event, Store} from 'effector'
 import {PropertyMap, DOMProperty, AttributeStoreInput, StylePropertyMap, HandlerMap} from 'forest'
 
 export type RouterParams = {
-  baseURL?: string
+  context?: string
   routes: Routes
+  notFoundView?: () => void
 }
 export type Route = {
   path: string
-  exact?: boolean
-  component: () => void
+  view: (props?: any) => void
 }
+export type CurrentRoute = Store<{
+  path: string
+  params: {
+    [x: string]: string
+  }
+}>
 export type Routes = Route[]
 export type Spec = {
   attr?: PropertyMap
@@ -21,23 +27,11 @@ export type Spec = {
   handler?: HandlerMap
   fn?: () => void
 }
-export type Router = {
-  $currentRoute: Store<
-    | {
-        path: string
-        url: string
-        isExact: boolean
-        params: {
-          [x: string]: string
-        }
-      }
-    | {
-        path: string
-      }
-  >
-  $currentPath: Store<string>
-  push: Event<string>
-  Link: (config?: Spec) => void
-  Router: () => void
-}
-export function createURLRouter({baseURL, routes}: RouterParams): Router
+export type Router = () => void
+export function createURLRouter({context: baseURL, routes}: RouterParams): Router
+export const Link: (config?: Spec) => void
+export const goTo: Effect<string, void, Error>
+export const $currentRoute: Store<{
+  path: string
+  params: {[key: string]: string}
+}>

@@ -1,12 +1,13 @@
 {
   "extends": "./tsconfig.json",
   "include": [
-    "./babel.config.js",
-    "./.eslintrc.js",
-    "./__mocks__/**/*",
-    "./jest.config.js",
-    "./rollup.config.js",
-    "./jest.config.ts"
+    "babel.config.js",
+    ".eslintrc.js",
+    "__mocks__/**/*",
+    "jest.config.js",
+    "rollup.config.js",
+    "jest.config.ts",
+    "__tests__/index.test.ts"
   ],
   "compilerOptions": {
     "allowJs": true
