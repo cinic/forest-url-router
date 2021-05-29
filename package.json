@@ -14,7 +14,8 @@
     "compile": "rollup --config",
     "types": "tsc --build tsconfig.build.json",
     "copyts": "cp ./src/index.d.ts ./dist/index.d.ts && cp ./src/index.d.ts ./dist/index.esm.d.ts && cp ./src/index.d.ts ./dist/index.cjs.d.ts",
-    "clean": "rm -rf ./dist"
+    "clean": "rm -rf ./dist",
+    "test": "jest"
   },
   "husky": {
     "hooks": {
@@ -39,17 +40,18 @@
     "path-to-regexp": "^6.2.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.12.8",
-    "@babel/core": "^7.12.9",
-    "@babel/preset-typescript": "^7.12.7",
+    "@babel/cli": "^7.14.3",
+    "@babel/core": "^7.14.3",
+    "@babel/preset-env": "^7.14.4",
+    "@babel/preset-typescript": "^7.13.0",
     "@rollup/plugin-babel": "^5.2.2",
     "@rollup/plugin-commonjs": "^17.0.0",
     "@rollup/plugin-node-resolve": "^11.0.0",
-    "@types/jest": "^26.0.19",
-    "@typescript-eslint/eslint-plugin": "^4.9.0",
-    "@typescript-eslint/parser": "^4.9.0",
-    "babel-jest": "^26.6.3",
-    "effector": "^21.7.5",
+    "@types/jest": "^26.0.23",
+    "@typescript-eslint/eslint-plugin": "^4.25.0",
+    "@typescript-eslint/parser": "^4.25.0",
+    "babel-jest": "^27.0.1",
+    "effector": "^21.8.11",
     "eslint": "^7.15.0",
     "eslint-config-prettier": "^7.0.0",
     "eslint-import-resolver-alias": "^1.1.2",
