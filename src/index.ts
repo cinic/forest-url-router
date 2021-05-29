@@ -1,7 +1,7 @@
 import {createEffect, createEvent, createStore, restore, attach, combine} from 'effector'
 import {h, spec, variant} from 'forest'
 import {pathToRegexp, Key} from 'path-to-regexp'
-import {RouterParams, Router, Spec, Routes} from './index.d'
+import {RouterParams, Router, Spec, Callback, Routes} from './index.d'
 
 const NOT_FOUND_PATH = '__'
 const routeCache: RouteCache = {}
@@ -64,23 +64,26 @@ export function createURLRouter({
     })
 }
 
-export const Link = ({attr, text, handler, ...config}: Spec = {}) =>
+export const Link = (config: Spec | Callback) =>
   h('a', () => {
-    spec({
-      ...config,
-      attr: {
-        ...attr,
-        href: $context.map((context) => `${context}${attr?.href}`),
-      },
-      text,
-      handler: {
-        ...handler,
-        click: goTo.prepend((e) => {
-          e.preventDefault()
-          return (attr?.href || '') as string
-        }),
-      },
-    })
+    if (typeof config === 'function') {
+      config()
+    } else {
+      spec(config)
+      spec({
+        attr: {
+          href: $context.map((context) => `${context}${config.attr?.href}`),
+        },
+        handler: {
+          click: goTo.prepend((e) => {
+            e.preventDefault()
+            return (config.attr?.href || '') as string
+          }),
+        },
+      })
+
+      typeof config.fn === 'function' && config.fn()
+    }
   })
 
 function routeByPathname({pathname, routes}: MatchRouteParams) {
