@@ -5,7 +5,7 @@
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",
   "types": "./dist/index.d.ts",
-  "repository": "https://github.com/cinic/forest-url-router",
+  "repository": "https://github.com/cinic/forest-url-router.git",
   "author": "Alexander Andreev <cinic.rus@gmail.com>",
   "license": "MIT",
   "private": false,
@@ -73,5 +73,8 @@
   "peerDependencies": {
     "effector": "^21.7.5",
     "forest": "^0.19.2"
+  },
+  "publishConfig": {
+    "registry":"https://npm.pkg.github.com"
   }
 }
