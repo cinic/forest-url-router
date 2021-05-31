@@ -1,6 +1,6 @@
 {
-  "name": "@cinic/forest-url-router",
-  "version": "2.0.6",
+  "name": "forest-url-router",
+  "version": "2.0.7",
   "description": "Small url router for Forest JS",
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",
@@ -15,7 +15,8 @@
     "types": "tsc --build tsconfig.build.json",
     "copyts": "cp ./src/index.d.ts ./dist/index.d.ts && cp ./src/index.d.ts ./dist/index.esm.d.ts && cp ./src/index.d.ts ./dist/index.cjs.d.ts",
     "clean": "rm -rf ./dist",
-    "test": "jest"
+    "test": "jest",
+    "prepublish": "yarn build"
   },
   "husky": {
     "hooks": {
@@ -73,8 +74,5 @@
   "peerDependencies": {
     "effector": "^21.7.5",
     "forest": "^0.19.2"
-  },
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com"
   }
 }
