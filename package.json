@@ -1,5 +1,5 @@
 {
-  "name": "forest-url-router",
+  "name": "@cinic/forest-url-router",
   "version": "2.0.4",
   "description": "Small url router for Forest JS",
   "main": "dist/index.cjs.js",
