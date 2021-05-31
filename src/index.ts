@@ -17,7 +17,7 @@ const pushState = createEffect(
   },
 )
 
-const $context = restore(changeContext, '')
+export const $context = restore(changeContext, '')
 const $routes = restore(addRoutes, [])
 const $currentPathname = createStore('/')
 export const $currentRoute = combine(
@@ -46,15 +46,14 @@ export function createURLRouter({
 }: RouterParams): Router {
   if (!Array.isArray(routes)) throw Error('routes should be an Array of Route!')
 
-  if (context) {
-    context.match(/^[^/]/) ? changeContext(`/${context}`) : changeContext(context)
-  }
+  const ctx = context && context.match(/^[^/]/) ? `/${context}` : context
 
+  changeContext(ctx)
   addRoutes(routes)
-  popState(location.pathname.replace(context, ''))
+  popState(location.pathname.replace(ctx, ''))
 
   window.addEventListener('popstate', (e) =>
-    popState((e.target as Window).location.pathname.replace(context, '')),
+    popState((e.target as Window).location.pathname.replace(ctx, '')),
   )
 
   return () =>
