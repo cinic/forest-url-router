@@ -1,6 +1,6 @@
 {
   "name": "@cinic/forest-url-router",
-  "version": "2.0.5",
+  "version": "2.0.6",
   "description": "Small url router for Forest JS",
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",
@@ -75,6 +75,6 @@
     "forest": "^0.19.2"
   },
   "publishConfig": {
-    "registry":"https://npm.pkg.github.com"
+    "registry": "https://npm.pkg.github.com"
   }
 }
