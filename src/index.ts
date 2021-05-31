@@ -46,7 +46,7 @@ export function createURLRouter({
 }: RouterParams): Router {
   if (!Array.isArray(routes)) throw Error('routes should be an Array of Route!')
 
-  const ctx = context && context.match(/^[^/]/) ? `/${context}` : context
+  const ctx = context && context.match(/^\//) ? context : `/${context}`
 
   changeContext(ctx)
   addRoutes(routes)
@@ -75,7 +75,7 @@ export const Link = (config: Spec | Callback) =>
       spec({
         attr: {
           href: $context.map((context) => {
-            const href = `${context}${config.attr?.href}`
+            const href = `${context}${config.attr?.href || ''}`
 
             return href.length > 1 ? href.replace(/\/$/, '') : href
           }),
