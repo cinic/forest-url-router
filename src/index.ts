@@ -46,7 +46,9 @@ export function createURLRouter({
 }: RouterParams): Router {
   if (!Array.isArray(routes)) throw Error('routes should be an Array of Route!')
 
-  const ctx = context && context.match(/^\//) ? context : `/${context}`
+  let ctx = context
+
+  if (context && !context.match(/^\//)) ctx = `/${context}`
 
   changeContext(ctx)
   addRoutes(routes)

@@ -8,4 +8,11 @@ describe('Test router creation', () => {
     })
     expect($context.getState()).toBe('/dealer')
   })
+  it('empty context', () => {
+    createURLRouter({
+      context: '',
+      routes: [{path: '/', view: () => console.log('Hello')}],
+    })
+    expect($context.getState()).toBe('')
+  })
 })
