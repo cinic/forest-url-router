@@ -1,64 +1,56 @@
-import {createEffect, createEvent, createStore, restore, attach, combine} from 'effector'
+import {createEffect, createEvent, createStore, attach, combine} from 'effector'
 import {h, spec, variant} from 'forest'
 import {pathToRegexp, Key} from 'path-to-regexp'
-import {RouterParams, Router, Spec, Callback, Routes} from './index.d'
+import {RouterParams, Router, Spec, Routes} from './index.d'
 
 const NOT_FOUND_PATH = '__'
 const routeCache: RouteCache = {}
 const emptyRoute = {path: NOT_FOUND_PATH, params: {}}
 
-const changeContext = createEvent<string>()
-const popState = createEvent<string>()
-const addRoutes = createEvent<Routes>('Add routes')
-
-const pushState = createEffect(
-  ({pathname, params, path}: {pathname: string; params: Params; path: string}) => {
-    if (location.pathname !== pathname) history.pushState({params, path}, '', pathname)
-  },
-)
-
-export const $context = restore(changeContext, '')
-const $routes = restore(addRoutes, [])
-const $currentPathname = createStore('/')
-export const $currentRoute = combine(
-  $currentPathname,
-  $routes,
-  (pathname, routes) => routeByPathname({pathname, routes}) || emptyRoute,
-)
-
-export const goTo = attach({
-  effect: pushState,
-  source: {context: $context, routes: $routes},
-  mapParams: (pathnameWithoutContext: string, {routes, context}) => {
-    const {params, path} = routeByPathname({pathname: pathnameWithoutContext, routes}) || emptyRoute
-    const pathname = `${context}${pathnameWithoutContext}`
-
-    return {context, params, pathname, path}
-  },
-})
-
-$currentPathname.on([popState, goTo], (_, path) => path)
-
 export function createURLRouter({
   context = '',
-  routes,
+  routes = [],
   notFoundView = () => void 0,
+  startPath = '/',
 }: RouterParams): Router {
   if (!Array.isArray(routes)) throw Error('routes should be an Array of Route!')
+  if (context && !context.match(/^\//)) context = `/${context}`
 
-  let ctx = context
+  const popState = createEvent<string>()
 
-  if (context && !context.match(/^\//)) ctx = `/${context}`
-
-  changeContext(ctx)
-  addRoutes(routes)
-  popState(location.pathname.replace(ctx, ''))
-
-  window.addEventListener('popstate', (e) =>
-    popState((e.target as Window).location.pathname.replace(ctx, '')),
+  const pushState = createEffect(
+    ({pathname, params, path}: {pathname: string; params: Params; path: string}) => {
+      if (location.pathname !== pathname) history.pushState({params, path}, '', pathname)
+    },
   )
 
-  return () =>
+  const $routes = createStore(routes)
+  const $currentPathname = createStore(startPath)
+  const $currentRoute = combine(
+    $currentPathname,
+    $routes,
+    (pathname, routes) => routeByPathname({pathname, routes}) || emptyRoute,
+  )
+
+  const goTo = attach({
+    effect: pushState,
+    source: {routes: $routes},
+    mapParams: (pathnameWithoutContext: string, {routes}) => {
+      const {params, path} =
+        routeByPathname({pathname: pathnameWithoutContext, routes}) || emptyRoute
+      const pathname = `${context}${pathnameWithoutContext}`
+
+      return {context, params, pathname, path}
+    },
+  })
+
+  $currentPathname.on([popState, goTo], (_, path) => path)
+
+  window.addEventListener('popstate', (e) =>
+    popState((e.target as Window).location.pathname.replace(context, '')),
+  )
+
+  const Router = () =>
     variant({
       source: $currentRoute,
       key: 'path',
@@ -66,33 +58,40 @@ export function createURLRouter({
         [NOT_FOUND_PATH]: notFoundView,
       }),
     })
-}
 
-export const Link = (config: Spec | Callback) =>
-  h('a', () => {
-    if (typeof config === 'function') {
-      config()
-    } else {
+  const Link = (config: Spec) => {
+    if (!config.to) throw Error('Attr "to" should be a path of Route!')
+
+    h('a', () => {
+      const href = `${context}${config.to}`
       spec(config)
       spec({
         attr: {
-          href: $context.map((context) => {
-            const href = `${context}${config.attr?.href || ''}`
-
-            return href.length > 1 ? href.replace(/\/$/, '') : href
-          }),
+          href: href.length > 1 ? href.replace(/\/$/, '') : href,
         },
         handler: {
-          click: goTo.prepend((e) => {
-            e.preventDefault()
-            return (config.attr?.href || '') as string
-          }),
+          config: {
+            prevent: true,
+          },
+          on: {
+            click: goTo.prepend(() => config.to),
+          },
         },
       })
 
       typeof config.fn === 'function' && config.fn()
-    }
-  })
+    })
+  }
+
+  return {
+    Router,
+    Link,
+    goTo,
+    context,
+    $currentPathname,
+    $currentRoute,
+  }
+}
 
 function routeByPathname({pathname, routes}: MatchRouteParams) {
   if (routeCache[pathname]) {

@@ -5,6 +5,7 @@ export type RouterParams = {
   context?: string
   routes: Routes
   notFoundView?: () => void
+  startPath: Route['path']
 }
 export type Route = {
   path: string
@@ -18,12 +19,16 @@ export type CurrentRoute = Store<{
 }>
 export type Routes = Route[]
 export type Callback = () => void
-export type Spec = Parameters<typeof spec>[0] & {fn?: Callback}
-export type Router = () => void
+export type Spec = Parameters<typeof spec>[0] & {fn?: Callback, to: Route['path']}
+export type Router = {
+  Router: () => void
+  goTo: Effect<string, void, Error>
+  Link: (config: Spec) => void
+  $currentRoute: Store<{
+    path: string
+    params: {[key: string]: string}
+  }>
+  $currentPathname: Store<string>
+  context: string
+}
 export function createURLRouter({context: baseURL, routes}: RouterParams): Router
-export const Link: (config?: Spec | Callback) => void
-export const goTo: Effect<string, void, Error>
-export const $currentRoute: Store<{
-  path: string
-  params: {[key: string]: string}
-}>
