@@ -1,7 +1,7 @@
 import {createEffect, createEvent, createStore, restore, attach, combine} from 'effector'
 import {h, spec, variant} from 'forest'
 import {pathToRegexp, Key} from 'path-to-regexp'
-import {RouterParams, Router, Spec, Callback, Routes} from './index.d'
+import {RouterParams, Router, Spec, Routes} from './index.d'
 
 const NOT_FOUND_PATH = '__'
 const routeCache: RouteCache = {}
@@ -17,9 +17,9 @@ const pushState = createEffect(
   },
 )
 
-export const $context = restore(changeContext, '')
 const $routes = restore(addRoutes, [])
 const $currentPathname = createStore('/')
+export const $context = restore(changeContext, '')
 export const $currentRoute = combine(
   $currentPathname,
   $routes,
@@ -43,19 +43,17 @@ export function createURLRouter({
   context = '',
   routes,
   notFoundView = () => void 0,
+  startPath = '/',
 }: RouterParams): Router {
   if (!Array.isArray(routes)) throw Error('routes should be an Array of Route!')
+  if (context && !context.match(/^\//)) context = `/${context}`
 
-  let ctx = context
-
-  if (context && !context.match(/^\//)) ctx = `/${context}`
-
-  changeContext(ctx)
+  changeContext(context)
   addRoutes(routes)
-  popState(location.pathname.replace(ctx, ''))
+  popState(startPath)
 
   window.addEventListener('popstate', (e) =>
-    popState((e.target as Window).location.pathname.replace(ctx, '')),
+    popState((e.target as Window).location.pathname.replace(context, '')),
   )
 
   return () =>
@@ -68,30 +66,28 @@ export function createURLRouter({
     })
 }
 
-export const Link = (config: Spec | Callback) =>
+export const Link = (config: Spec) =>
   h('a', () => {
-    if (typeof config === 'function') {
-      config()
-    } else {
-      spec(config)
-      spec({
-        attr: {
-          href: $context.map((context) => {
-            const href = `${context}${config.attr?.href || ''}`
+    spec(config)
+    spec({
+      attr: {
+        href: $context.map((context) => {
+          const href = `${context}${config.to}`
 
-            return href.length > 1 ? href.replace(/\/$/, '') : href
-          }),
+          return href.length > 1 ? href.replace(/\/$/, '') : href
+        }),
+      },
+      handler: {
+        config: {
+          prevent: true,
         },
-        handler: {
-          click: goTo.prepend((e) => {
-            e.preventDefault()
-            return (config.attr?.href || '') as string
-          }),
+        on: {
+          click: goTo.prepend(() => config.to),
         },
-      })
+      },
+    })
 
-      typeof config.fn === 'function' && config.fn()
-    }
+    typeof config.fn === 'function' && config.fn()
   })
 
 function routeByPathname({pathname, routes}: MatchRouteParams) {

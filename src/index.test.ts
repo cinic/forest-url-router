@@ -5,6 +5,7 @@ describe('Test router creation', () => {
     createURLRouter({
       context: 'dealer',
       routes: [{path: '/', view: () => console.log('Hello')}],
+      startPath: '/',
     })
     expect($context.getState()).toBe('/dealer')
   })
@@ -12,6 +13,7 @@ describe('Test router creation', () => {
     createURLRouter({
       context: '',
       routes: [{path: '/', view: () => console.log('Hello')}],
+      startPath: '/',
     })
     expect($context.getState()).toBe('')
   })
