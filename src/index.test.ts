@@ -1,20 +1,20 @@
-import {createURLRouter, $context} from './index'
+import {createRouter} from './create-router'
+import {$context} from './model'
 
 describe('Test router creation', () => {
   it('context without /', () => {
-    createURLRouter({
+    createRouter({
       context: 'dealer',
-      routes: [{path: '/', view: () => console.log('Hello')}],
+      routes: [{path: '/', fn: () => console.log('Hello')}],
       startPath: '/',
     })
     expect($context.getState()).toBe('/dealer')
   })
   it('empty context', () => {
-    createURLRouter({
-      context: '',
-      routes: [{path: '/', view: () => console.log('Hello')}],
+    createRouter({
+      routes: [{path: '/', fn: () => console.log('Hello')}],
       startPath: '/',
     })
-    expect($context.getState()).toBe('')
+    expect($context.getState()).toBe('/')
   })
 })
