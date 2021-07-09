@@ -1,4 +1,5 @@
 import {spec} from 'forest'
+import {Store, Effect} from 'effector'
 
 export type Keys = {name: string}[]
 export type RouteCache = {[key: string]: MatchedPath}
@@ -18,10 +19,19 @@ export type Route = {
 export type RouterParams = {
   context?: string
   routes: Routes
-  notFoundView?: () => void
   startPath: Route['path']
 }
 export type Router = () => void
 export type Spec = Parameters<typeof spec>[0] & {fn?: Callback; to: Route['path']}
 type Callback = () => void
 export type RoutesRecord = Record<Route['path'], Route['fn']>
+
+export declare function createURLRouter(config: RouterParams): Router
+export declare function createRouter(config: RouterParams): Router
+export declare const RouterLink: (config: Spec) => void
+export declare const Link: (config: Spec) => void
+export declare const goTo: Effect<keyof RoutesRecord, void, Error>
+export declare const $currentRoute: Store<{
+  path: string
+  params: Params
+}>

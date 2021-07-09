@@ -3,12 +3,7 @@ import {flatMap} from './lib/flat-map'
 import {$currentRoute, addRoutes, changeContext, NOT_FOUND_PATH, popState} from './model'
 import {RouterParams, Router} from './types'
 
-export function createRouter({
-  context = '/',
-  routes,
-  notFoundView = () => void 0,
-  startPath = '/',
-}: RouterParams): Router {
+export function createRouter({context = '/', routes, startPath = '/'}: RouterParams): Router {
   if (!Array.isArray(routes)) throw Error('routes should be an Array of Route!')
   if (context && !context.match(/^\//)) context = `/${context}`
   const _routes = flatMap(routes)
@@ -25,7 +20,7 @@ export function createRouter({
       source: $currentRoute,
       key: 'path',
       cases: {
-        [NOT_FOUND_PATH]: notFoundView,
+        [NOT_FOUND_PATH]: () => undefined,
         ..._routes,
       },
     })
