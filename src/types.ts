@@ -28,8 +28,9 @@ export type RoutesRecord = Record<Route['path'], Route['fn']>
 
 export declare function createURLRouter(config: RouterParams): Router
 export declare function createRouter(config: RouterParams): Router
-export declare const RouterLink: (config: Spec) => void
-export declare const Link: (config: Spec) => void
+export declare function RouterLink(config: Spec): void
+export declare function Link(config: Spec): void
+export declare function Redirect({to}: {to: string}): void
 export declare const goTo: Effect<keyof RoutesRecord, void, Error>
 export declare const $currentRoute: Store<{
   path: string
