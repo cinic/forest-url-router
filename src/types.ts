@@ -15,10 +15,6 @@ export type Route = {
   fn: (props?: MatchedPath) => void
   children?: Routes
 }
-export type CurrentRoute = {
-  path: string
-  params: Params
-}
 export type RouterParams = {
   context?: string
   routes: Routes
@@ -27,5 +23,5 @@ export type RouterParams = {
 }
 export type Router = () => void
 export type Spec = Parameters<typeof spec>[0] & {fn?: Callback; to: Route['path']}
-export type Callback = () => void
+type Callback = () => void
 export type RoutesRecord = Record<Route['path'], Route['fn']>
