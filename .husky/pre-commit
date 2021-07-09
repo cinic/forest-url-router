@@ -1,0 +1,4 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+export PATH="$PATH:~/.npm-global/bin"
+yarn lint-staged
