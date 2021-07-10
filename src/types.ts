@@ -19,7 +19,6 @@ export type Route = {
 export type RouterParams = {
   context?: string
   routes: Routes
-  startPath: Route['path']
 }
 export type Router = () => void
 export type Spec = Parameters<typeof spec>[0] & {fn?: Callback; to: Route['path']}
