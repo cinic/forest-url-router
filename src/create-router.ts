@@ -13,7 +13,10 @@ export function createRouter({routes, context = '/'}: RouterParams): Router {
   addRoutes(_routes)
 
   window.addEventListener('popstate', (e) => {
-    const pathname = (e.target as Window).location.pathname.replace(context, '') || '/'
+    const pathname =
+      context !== '/'
+        ? (e.target as Window).location.pathname.replace(context, '')
+        : (e.target as Window).location.pathname
     popState(pathname)
   })
 
