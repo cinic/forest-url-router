@@ -13,7 +13,7 @@ export type MatchRouteParams = {routes: RoutesRecord; pathname: string}
 export type Routes = Route[]
 export type Route = {
   path: string
-  fn: (props?: MatchedPath) => void
+  fn: ({store}?: {store: MatchedPath}) => void
   children?: Routes
 }
 export type RouterParams = {
