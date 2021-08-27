@@ -1,14 +1,35 @@
+import {Store, combine, createEvent, sample} from 'effector'
 import {h, spec} from 'forest'
 import {$context, goTo} from '../model'
 import {Spec} from '../types'
 
 export function RouterLink(config: Spec) {
-  const href = $context.map((context) => {
-    const href = (context + config.to).replace('//', '/')
+  let href: string | Store<string>
+  let trigger = createEvent<MouseEvent>()
 
-    return href.length > 1 ? href.replace(/\/$/, '') : href
-  })
-  const trigger = goTo.prepend<MouseEvent>(() => config.to)
+  if (typeof config.to === 'string') {
+    const to = config.to
+
+    href = $context.map((context) => {
+      const href = (context + config.to).replace('//', '/')
+
+      return href.length > 1 ? href.replace(/\/$/, '') : href
+    })
+
+    trigger = goTo.prepend<MouseEvent>(() => to)
+  } else {
+    href = combine($context, config.to, (context, to) => {
+      const href = (context + to).replace('//', '/')
+
+      return href.length > 1 ? href.replace(/\/$/, '') : href
+    })
+
+    sample({
+      clock: trigger,
+      source: config.to,
+      target: goTo,
+    })
+  }
 
   h('a', () => {
     spec(config)

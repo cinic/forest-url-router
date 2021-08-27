@@ -21,7 +21,10 @@ export type RouterParams = {
   routes: Routes
 }
 export type Router = () => void
-export type Spec = Parameters<typeof spec>[0] & {fn?: Callback; to: Route['path']}
+export type Spec = Parameters<typeof spec>[0] & {
+  fn?: Callback
+  to: Route['path'] | Store<Route['path']>
+}
 type Callback = () => void
 export type RoutesRecord = Record<Route['path'], Route['fn']>
 
