@@ -36,11 +36,13 @@ export const $currentRoute = combine(
 export const goTo = attach({
   effect: pushState,
   source: {context: $context, routes: $routes},
-  mapParams: (pathnameWithoutContext: keyof RoutesRecord, {routes, context}) => {
-    const {params, path} = routeByPathname({pathname: pathnameWithoutContext, routes}) || emptyRoute
-    const pathname = `${context}${pathnameWithoutContext}`.replace('//', '/')
+  mapParams: (_pathname: keyof RoutesRecord, {routes, context}) => {
+    const {params, path} = routeByPathname({pathname: _pathname, routes}) || emptyRoute
+    const normalizedPathname =
+      context !== '/' && _pathname.includes(context) ? _pathname : `${context}${_pathname}`
+    const pathname = normalizedPathname.replace('//', '/')
 
-    return {context, params, pathname, path}
+    return {params, pathname, path}
   },
 })
 
