@@ -1,6 +1,6 @@
 {
   "name": "forest-url-router",
-  "version": "3.1.7",
+  "version": "3.2.0",
   "description": "Small url router for Forest JS",
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",
@@ -16,6 +16,7 @@
     "copyts": "cp ./src/types.ts ./dist/index.d.ts && cp ./src/types.ts ./dist/index.esm.d.ts && cp ./src/types.ts ./dist/index.cjs.d.ts",
     "clean": "rm -rf ./dist",
     "test": "jest",
+    "test:watch": "jest --watch",
     "prepublish": "yarn build"
   },
   "husky": {
