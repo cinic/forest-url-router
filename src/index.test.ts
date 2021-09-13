@@ -1,18 +1,34 @@
 import {createRouter} from './create-router'
-import {$context} from './model'
+import {$basepath, $currentRoute, goTo} from './model'
 
 describe('Test router creation', () => {
   it('context without /', () => {
-    createRouter({
-      context: 'dealer',
-      routes: [{path: '/', fn: console.log}],
-    })
-    expect($context.getState()).toBe('/dealer')
+    const router = () =>
+      createRouter({
+        basepath: 'dealer',
+        routes: [{path: '/', fn: console.log}],
+      })
+
+    expect(router).toThrowError('basepath should start with /')
   })
-  it('empty context', () => {
+
+  it('basepath /dealer', () => {
     createRouter({
+      basepath: '/dealer',
       routes: [{path: '/', fn: console.log}],
     })
-    expect($context.getState()).toBe('/')
+
+    expect($basepath.getState()).toBe('/dealer')
+  })
+
+  it('goTo with basepath /dealer', () => {
+    createRouter({
+      basepath: '/dealer',
+      routes: [{path: '/', fn: console.log}],
+    })
+
+    goTo('/')
+
+    expect($currentRoute.getState()).toStrictEqual({path: '/dealer', params: {}})
   })
 })

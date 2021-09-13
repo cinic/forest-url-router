@@ -1,4 +1,4 @@
-import {createEvent, createEffect, restore, createStore, combine, attach} from 'effector'
+import {createEvent, createEffect, restore, createStore, combine, attach, sample} from 'effector'
 import {pathToRegexp, Key} from 'path-to-regexp'
 import {
   Keys,
@@ -14,7 +14,7 @@ export const NOT_FOUND_PATH = '__'
 export const routeCache: RouteCache = {}
 export const emptyRoute = {path: NOT_FOUND_PATH, params: {}}
 
-export const changeContext = createEvent<string>()
+export const changeBasepath = createEvent<string>()
 export const popState = createEvent<string>()
 export const addRoutes = createEvent<RoutesRecord>('Add routes')
 
@@ -24,9 +24,9 @@ export const pushState = createEffect(
   },
 )
 
-const $routes = restore(addRoutes, {})
+export const $routes = restore(addRoutes, {})
 const $currentPathname = createStore('/')
-export const $context = restore(changeContext, '/')
+export const $basepath = restore(changeBasepath, null)
 export const $currentRoute = combine(
   $currentPathname,
   $routes,
@@ -35,18 +35,23 @@ export const $currentRoute = combine(
 
 export const goTo = attach({
   effect: pushState,
-  source: {context: $context, routes: $routes},
-  mapParams: (_pathname: keyof RoutesRecord, {routes, context}) => {
-    const {params, path} = routeByPathname({pathname: _pathname, routes}) || emptyRoute
-    const normalizedPathname =
-      context !== '/' && _pathname.includes(context) ? _pathname : `${context}${_pathname}`
-    const pathname = normalizedPathname.replace('//', '/')
+  source: {routes: $routes, basepath: $basepath},
+  mapParams: (_pathname: keyof RoutesRecord, {routes, basepath}) => {
+    const pathname = basepath ? `${basepath}${_pathname}`.replace(/\/$/, '') : _pathname
+    const {params, path} = routeByPathname({pathname, routes}) || emptyRoute
 
     return {params, pathname, path}
   },
 })
 
-$currentPathname.on([popState, goTo], (_, path) => path)
+$currentPathname.on([popState, changeBasepath], (_, path) => path)
+
+sample({
+  clock: goTo,
+  source: $basepath,
+  fn: (basepath, pathname) => (basepath ? `${basepath}${pathname}`.replace(/\/$/, '') : pathname),
+  target: $currentPathname,
+})
 
 function routeByPathname({pathname, routes}: MatchRouteParams) {
   if (routeCache[pathname]) {

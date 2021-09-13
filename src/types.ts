@@ -13,11 +13,13 @@ export type MatchRouteParams = {routes: RoutesRecord; pathname: string}
 export type Routes = Route[]
 export type Route = {
   path: string
-  fn: ({store}?: {store: MatchedPath}) => void
+  fn: ({store}: {store: MatchedPath}) => void
   children?: Routes
 }
 export type RouterParams = {
+  // @deprecated
   context?: string
+  basepath?: string
   routes: Routes
 }
 export type Router = () => void
