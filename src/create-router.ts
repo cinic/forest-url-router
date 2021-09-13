@@ -3,8 +3,7 @@ import {flatMap} from './lib/flat-map'
 import {$currentRoute, addRoutes, changeBasepath, NOT_FOUND_PATH, popState} from './model'
 import {RouterParams, Router} from './types'
 
-export function createRouter({routes, basepath, context}: RouterParams): Router {
-  basepath = context ?? basepath
+export function createRouter({routes, basepath = null}: RouterParams): Router {
   if (!Array.isArray(routes)) throw Error('routes should be an Array of Route!')
   if (basepath && !basepath.match(/^\//)) throw Error('basepath should start with /')
   if (basepath && basepath.match(/^\/$/)) throw Error('basepath should not be only /')

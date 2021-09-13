@@ -17,9 +17,7 @@ export type Route = {
   children?: Routes
 }
 export type RouterParams = {
-  // @deprecated
-  context?: string
-  basepath?: string
+  basepath?: string | null
   routes: Routes
 }
 export type Router = () => void
@@ -30,8 +28,7 @@ export type Spec = Parameters<typeof spec>[0] & {
 type Callback = () => void
 export type RoutesRecord = Record<Route['path'], Route['fn']>
 
-export declare function createURLRouter(config: {context?: string; routes: Routes}): () => void
-export declare function createRouter(config: {context?: string; routes: Routes}): () => void
+export declare function createRouter(config: RouterParams): () => void
 export declare function RouterLink(config: Spec): void
 export declare function Link(config: Spec): void
 export declare function Redirect({to}: {to: string}): void

@@ -1,5 +1,5 @@
 import {createRouter} from './create-router'
-import {$basepath, $routes, $currentRoute, goTo} from './model'
+import {$basepath, $currentRoute, goTo} from './model'
 
 describe('Test router creation', () => {
   it('context without /', () => {
