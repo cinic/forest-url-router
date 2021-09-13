@@ -37,7 +37,10 @@ export const goTo = attach({
   effect: pushState,
   source: {routes: $routes, basepath: $basepath},
   mapParams: (_pathname: keyof RoutesRecord, {routes, basepath}) => {
-    const pathname = basepath ? `${basepath}${_pathname}`.replace(/\/$/, '') : _pathname
+    const pathname =
+      basepath && !_pathname.includes(basepath)
+        ? `${basepath}${_pathname}`.replace(/\/$/, '')
+        : _pathname.replace(/\/$/, '')
     const {params, path} = routeByPathname({pathname, routes}) || emptyRoute
 
     return {params, pathname, path}
@@ -49,7 +52,10 @@ $currentPathname.on([popState, changeBasepath], (_, path) => path)
 sample({
   clock: goTo,
   source: $basepath,
-  fn: (basepath, pathname) => (basepath ? `${basepath}${pathname}`.replace(/\/$/, '') : pathname),
+  fn: (basepath, pathname) =>
+    basepath && !pathname.includes(basepath)
+      ? `${basepath}${pathname}`.replace(/\/$/, '')
+      : pathname.replace(/\/$/, ''),
   target: $currentPathname,
 })
 

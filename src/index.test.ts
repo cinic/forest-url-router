@@ -1,5 +1,5 @@
 import {createRouter} from './create-router'
-import {$basepath, $currentRoute, goTo} from './model'
+import {$basepath, $routes, $currentRoute, goTo} from './model'
 
 describe('Test router creation', () => {
   it('context without /', () => {
@@ -21,7 +21,7 @@ describe('Test router creation', () => {
     expect($basepath.getState()).toBe('/dealer')
   })
 
-  it('goTo with basepath /dealer', () => {
+  it('goTo / with basepath /dealer', () => {
     createRouter({
       basepath: '/dealer',
       routes: [{path: '/', fn: console.log}],
@@ -30,5 +30,16 @@ describe('Test router creation', () => {
     goTo('/')
 
     expect($currentRoute.getState()).toStrictEqual({path: '/dealer', params: {}})
+  })
+
+  it('goTo basepath', () => {
+    createRouter({
+      basepath: '/dealer',
+      routes: [{path: '/', fn: console.log}],
+    })
+
+    goTo('/dealer')
+
+    expect($currentRoute.getState().path).toBe('/dealer')
   })
 })
