@@ -25,7 +25,7 @@ export const pushState = createEffect(
 )
 
 export const $routes = restore(addRoutes, {})
-const $currentPathname = createStore('/')
+export const $currentPathname = createStore('/')
 export const $basepath = restore(changeBasepath, null)
 export const $currentRoute = combine(
   $currentPathname,
@@ -52,10 +52,14 @@ $currentPathname.on([popState, changeBasepath], (_, path) => path)
 sample({
   clock: goTo,
   source: $basepath,
-  fn: (basepath, pathname) =>
-    basepath && !pathname.includes(basepath)
-      ? `${basepath}${pathname}`.replace(/\/$/, '')
-      : pathname.replace(/\/$/, ''),
+  fn: (basepath, pathname) => {
+    const _pathname =
+      basepath && basepath !== '/' && !pathname.includes(basepath)
+        ? `${basepath}${pathname}`.replace(/\/$/, '')
+        : pathname
+
+    return _pathname.length > 1 ? _pathname.replace(/\/$/, '') : _pathname
+  },
   target: $currentPathname,
 })
 

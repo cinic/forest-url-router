@@ -37,3 +37,5 @@ export declare const $currentRoute: Store<{
   path: string
   params: Params
 }>
+export declare const $currentPathname: Store<string>
+export declare const $routes: Store<RoutesRecord>

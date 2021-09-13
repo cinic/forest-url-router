@@ -6,12 +6,16 @@ import {RouterParams, Router} from './types'
 export function createRouter({routes, basepath = null}: RouterParams): Router {
   if (!Array.isArray(routes)) throw Error('routes should be an Array of Route!')
   if (basepath && !basepath.match(/^\//)) throw Error('basepath should start with /')
-  if (basepath && basepath.match(/^\/$/)) throw Error('basepath should not be only /')
+  if (basepath && basepath.match(/^\/$/)) basepath = null
   if (basepath) changeBasepath(basepath)
 
   const _routes = basepath
     ? flatMap(
-        routes.map((route) => ({...route, path: `${basepath}${route.path}`.replace(/\/$/, '')})),
+        routes.map((route) => {
+          const path = `${basepath}${route.path}`.replace(/\/$/, '')
+
+          return {...route, path}
+        }),
       )
     : flatMap(routes)
 
@@ -29,8 +33,3 @@ export function createRouter({routes, basepath = null}: RouterParams): Router {
       },
     })
 }
-
-/**
- * @deprecated
- */
-export const createURLRouter = createRouter
