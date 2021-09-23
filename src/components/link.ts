@@ -1,35 +1,22 @@
-import {Store, combine, createEvent, sample} from 'effector'
+import {combine, createEvent, sample} from 'effector'
 import {h, spec} from 'forest'
 import {$basepath, goTo} from '../model'
 import {Spec} from '../types'
 
 export function RouterLink(config: Spec) {
-  let href: string | Store<string>
-  let trigger = createEvent<MouseEvent>()
+  const trigger = createEvent<MouseEvent>()
 
-  if (typeof config.to === 'string') {
-    const to = config.to
+  const href = combine({basepath: $basepath, to: config.to as string}, ({basepath, to}) => {
+    const href = basepath ? basepath + to : to
 
-    href = $basepath.map((basepath) => {
-      const href = basepath ? basepath + to : to
+    return href.length > 1 ? href.replace(/\/$/, '') : href
+  })
 
-      return href.length > 1 ? href.replace(/\/$/, '') : href
-    })
-
-    trigger = goTo.prepend<MouseEvent>(() => to)
-  } else {
-    href = combine($basepath, config.to, (basepath, to) => {
-      const href = basepath + to
-
-      return href.length > 1 ? href.replace(/\/$/, '') : href
-    })
-
-    sample({
-      clock: trigger,
-      source: config.to,
-      target: goTo,
-    })
-  }
+  sample({
+    clock: trigger,
+    source: href,
+    target: goTo,
+  })
 
   h('a', () => {
     spec(config)
