@@ -7,14 +7,7 @@
       }
     ]
   ],
-  "plugins": [
-    [
-      "effector/babel-plugin",
-      {
-        "addLoc": true
-      }
-    ]
-  ],
+  "plugins": ["effector/babel-plugin"],
   "env": {
     "test": {
       "presets": [

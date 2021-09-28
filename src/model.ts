@@ -19,7 +19,7 @@ export const popState = createEvent<string>()
 export const addRoutes = createEvent<RoutesRecord>('Add routes')
 
 export const pushState = createEffect(
-  ({pathname, params, path}: {pathname: string; params: Params; path: string}) => {
+  async ({pathname, params, path}: {pathname: string; params: Params; path: string}) => {
     if (location.pathname !== pathname) history.pushState({params, path}, '', pathname)
   },
 )

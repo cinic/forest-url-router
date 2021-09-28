@@ -1,4 +1,4 @@
 export {createRouter} from './create-router'
-export {RouterLink, Link} from './components/link'
+export {RouterLink, RouterLink as Link} from './components/link'
 export {Redirect} from './components/redirect'
-export {goTo, $currentRoute, $routes, $currentPathname} from './model'
+export {goTo, $basepath, $currentRoute, $routes, $currentPathname} from './model'

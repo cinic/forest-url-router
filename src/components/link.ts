@@ -31,8 +31,3 @@ export function RouterLink(config: Spec) {
     typeof config.fn === 'function' && config.fn()
   })
 }
-
-/**
- * @deprecated
- */
-export const Link = RouterLink
