@@ -10,9 +10,8 @@ import {
   RoutesRecord,
 } from './types'
 
-export const NOT_FOUND_PATH = '__'
 export const routeCache: RouteCache = {}
-export const emptyRoute = {path: NOT_FOUND_PATH, params: {}}
+export const emptyRoute = {path: '', params: {}}
 
 export const changeBasepath = createEvent<string>()
 export const popState = createEvent<string>()

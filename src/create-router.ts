@@ -1,6 +1,6 @@
 import {variant} from 'forest'
 import {flatMap} from './lib/flat-map'
-import {$currentRoute, addRoutes, changeBasepath, NOT_FOUND_PATH, popState} from './model'
+import {$currentRoute, addRoutes, changeBasepath, popState} from './model'
 import {RouterParams, Router} from './types'
 
 export function createRouter({routes, basepath = null}: RouterParams): Router {
@@ -22,13 +22,12 @@ export function createRouter({routes, basepath = null}: RouterParams): Router {
   addRoutes(_routes)
 
   window.addEventListener('popstate', (e) => popState((e.target as Window).location.pathname))
-
   return () =>
     variant({
       source: $currentRoute,
       key: 'path',
       cases: {
-        [NOT_FOUND_PATH]: () => undefined,
+        __: () => undefined,
         ..._routes,
       },
     })
