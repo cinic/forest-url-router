@@ -2540,10 +2540,10 @@ dpdm@^3.8.0:
     typescript "^4.4.3"
     yargs "^17.1.1"
 
-effector@^21.8.12:
-  version "21.8.12"
-  resolved "https://registry.yarnpkg.com/effector/-/effector-21.8.12.tgz#075ba0e17e41386bef271567a259585f407067ae"
-  integrity sha512-Xlw+qvPlfiF0qOHwRQ3RzS5/TtbfpCZ88ucLqG6o8algEV0nxI+Rd8fyJObDljfqQH0+2ByInawu731IXz5RCA==
+effector@^22.2.0:
+  version "22.2.0"
+  resolved "https://registry.yarnpkg.com/effector/-/effector-22.2.0.tgz#61667313cbe4fddeb9983582c3b59e1aae3603ec"
+  integrity sha512-N0dDgEO3/b9InYkPsoSM5YSJgVwJ1bQ/DWHU7C6sm9+L1CrT6gat0pLvey/ljFPNdNKL0S6MW5DEmDUvzJe1Ng==
 
 electron-to-chromium@^1.3.846:
   version "1.3.851"
@@ -3075,10 +3075,10 @@ for-in@^1.0.2:
   resolved "https://registry.yarnpkg.com/for-in/-/for-in-1.0.2.tgz#81068d295a8142ec0ac726c6e2200c30fb6d5e80"
   integrity sha1-gQaNKVqBQuwKxybG4iAMMPttXoA=
 
-forest@^0.19.6:
-  version "0.19.6"
-  resolved "https://registry.yarnpkg.com/forest/-/forest-0.19.6.tgz#dcae2f4c96f21229a1243732af952eeadc15f868"
-  integrity sha512-pMj2Murs7JfSLGfjtcpBF++XVdL044weGttKEF39lNP0TIs1/S1yFCla5RWY9GfepVeK1FDQ87ORYBTX3/wd0w==
+forest@^0.20.3:
+  version "0.20.3"
+  resolved "https://registry.yarnpkg.com/forest/-/forest-0.20.3.tgz#1580dc826eb751659632cc8092cfcd9f1ba92b6a"
+  integrity sha512-gyZAzoDhxRwYEcRIF8TJ2dqQaHWCwZU2Bq8FzSifqPvje+eLAISnd7QEvKlmwINftQFbrjgyESIIeCk7Vr7k7Q==
 
 form-data@^3.0.0:
   version "3.0.1"
